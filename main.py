@@ -1,9 +1,9 @@
 import os, time, json, requests, subprocess
 try:
-    import snscrape.modules.twitter as sntwitter
+    from snscrape.modules.twitter import TwitterUserScraper
 except:
     subprocess.call(["pip", "install", "snscrape"])
-    import snscrape.modules.twitter as sntwitter
+    from snscrape.modules.twitter import TwitterUserScraper
 
 from utils import send_telegram, translate
 
@@ -30,7 +30,7 @@ print("🚀 트윗 감지 봇 시작됨 (Railway 배포용)...")
 while True:
     for user in ACCOUNTS:
         try:
-            for tweet in sntwitter.TwitterUserScraper(user).get_items():
+            for tweet in TwitterUserScraper(user).get_items():
                 if tweet.id not in sent:
                     text = tweet.content
                     translated = translate(text)
